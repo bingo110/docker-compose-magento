@@ -40,8 +40,8 @@ services:
       context: ./php74/build/
     expose:
       - "9000"
-    ports:
-      - "9003:9003"
+    # ports:
+    #   # - "9003:9003"
     volumes:
       - type: bind
         source: ./php74/conf/php.ini
@@ -75,6 +75,9 @@ services:
 #        target: /data/wwwroot/m24.local/pub/static
     restart: always
     command: ["php-fpm","-R"]
+    # environment:
+    #   XDEBUG_CONFIG : "mode=debug client_host=host.docker.internal client_port=9003 start_with_request=yes idekey=PHPSTORM"
+    #   PHP_IDE_CONfIG: "serverName=my.local"
     extra_hosts:
       - "m24.local:10.113.3.211"
     networks:
