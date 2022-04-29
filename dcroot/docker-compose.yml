@@ -60,7 +60,7 @@ services:
         volume:
           nocopy: true
       - type: bind
-        source: ../share-data/test/
+        source: ../share-data/
         target: /share-data
 #      - type: bind
 #        source: ../share-data/m24.local/
