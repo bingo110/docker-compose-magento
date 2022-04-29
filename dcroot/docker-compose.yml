@@ -218,8 +218,6 @@ volumes:
     external: true
   vscode-server:
     external: true
-  test:
-    external: true
 
 networks:
   net-www:
