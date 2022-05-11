@@ -69,7 +69,8 @@ services:
     #   XDEBUG_CONFIG : "mode=debug client_host=host.docker.internal client_port=9003 start_with_request=yes idekey=PHPSTORM"
     #   PHP_IDE_CONfIG: "serverName=my.local"
     extra_hosts:
-      - "m24.local:10.113.3.211"
+      # - "m24.local:10.113.3.211"
+      - "m23.local:10.113.3.211"
     networks:
       - net-www
       - net-storage
