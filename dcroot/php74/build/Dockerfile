@@ -24,7 +24,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #RUN usermod -u 2200 www-data && groupmod -g 2200 www-data
 
 WORKDIR /data/wwwroot
-RUN apt-get update && apt-get install -y git && git config --global user.name "bingo110" && git config --global user.email "977856041@qq.com" && apt-get install -y vim && apt-get install unzip -y
+RUN apt-get update && apt-get install -y git && git config --global user.name "yubin" && git config --global user.email "bin.yu10@pactera.com" && apt-get install -y vim && apt-get install unzip -y && apt-get install wget -y
+#CA 证书
+RUN wget -P /usr/lib/ssl/ http://curl.haxx.se/ca/cacert.pem && chmod 744 /usr/lib/ssl/cacert.pem
 #RUN cp /share-data/dev_CA.crt /usr/local/share/ca-certificates && update-ca-certificates
 RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \    
         && php composer-setup.php \    && php -r "unlink('composer-setup.php');" \    

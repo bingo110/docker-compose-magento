@@ -35,19 +35,19 @@ services:
     networks:
       - net-www
 
-  php74:
+  php7.3:
     build:
-      context: ./php74/build/
+      context: ./php7.3/build/
     expose:
       - "9000"
     # ports:
     #   # - "9003:9003"
     volumes:
       - type: bind
-        source: ./php74/conf/php.ini
+        source: ./php7.3/conf/php.ini
         target: /usr/local/etc/php/php.ini
       - type: bind
-        source: ./php74/conf/php-fpm.conf
+        source: ./php7.3/conf/php-fpm.conf
         target: /usr/local/etc/php-fpm.d/www.conf
       - type: volume
         source: wwwroot
@@ -62,38 +62,29 @@ services:
       - type: bind
         source: ../share-data/
         target: /share-data
-#      - type: bind
-#        source: ../share-data/m24.local/
-#        target: /data/wwwroot/m24.local
-      # - type: tmpfs
-      #   target: /data/wwwroot/m24.local/generated
-#        tmpfs:
-#          size: 1000
-#      - type: tmpfs
-#        target: /data/wwwroot/m24.local/var
-#      - type: tmpfs
-#        target: /data/wwwroot/m24.local/pub/static
+
     restart: always
     command: ["php-fpm","-R"]
     # environment:
     #   XDEBUG_CONFIG : "mode=debug client_host=host.docker.internal client_port=9003 start_with_request=yes idekey=PHPSTORM"
     #   PHP_IDE_CONfIG: "serverName=my.local"
     extra_hosts:
-      - "m24.local:10.113.3.211"
+      # - "m24.local:10.113.3.211"
+      - "m23.local:10.113.3.211"
     networks:
       - net-www
       - net-storage
 
-  composer:
-    build:
-      context: ./composer/build/
-    volumes:
-      - type: volume
-        source: wwwroot
-        target: /data/wwwroot
-        volume:
-          nocopy: true
-      # - type: volume
+  # composer:
+  #   build:
+  #     context: ./composer/build/
+  #   volumes:
+  #     - type: volume
+  #       source: wwwroot
+  #       target: /data/wwwroot
+  #       volume:
+  #         nocopy: true
+  #     # - type: volume
       #   source: mysql8-data
       #   target: /data/dcdata/mysql8-data
       #   volume:
@@ -109,25 +100,23 @@ services:
       #   volume:
       #     nocopy: true
 
-  mysql8:
-    image: mysql:8
+  mysql5.7:
+    image: mysql:5.7
 #    expose:
 #      - "3306"
     ports:
       - "3306:3306"
     volumes:
       - type: bind
-        source: ./mysql8/conf/mysql.cnf
+        source: ./mysql5.7/conf/mysql.cnf
         target: /etc/mysql/conf.d/mysql.cnf
 #        read_only: true
       - type: volume
-        source: mysql8-data
+        source: mysql5.7-data
         target: /var/lib/mysql
         volume:
           nocopy: true
-      # - type: bind
-      #   source: ../dcdata/mysql8/data
-      #   target: /var/lib/mysql
+    
     restart: always
     command: --default-authentication-plugin=mysql_native_password #允许远程访问
     environment:
@@ -208,7 +197,9 @@ services:
       - net-storage
 
 volumes:
-  mysql8-data:
+  # mysql8-data:
+  #   external: true
+  mysql5.7-data:
     external: true
   redis-data:
     external: true
